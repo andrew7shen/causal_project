@@ -56,22 +56,36 @@ def gather_data(df_path, treatment, outcome):
 if __name__ == "__main__":
     print("\nRunning 'causal_estimates.py'...\n")
 
-    # Calculate causal effects of treatments on outcomes
-    df_path = "datasets/df_treatments_outcomes.csv"
-    treatments = ["Vegetables", "Sleep"]
-    outcomes = ["Depression", "Distress"]
+    synthetic = True
+    if not synthetic:
 
-    for outcome in outcomes: 
-        for treatment in treatments:
-            print("Treatment: %s\nOutcome: %s" % (treatment, outcome))
+        # Calculate causal effects of treatments on outcomes
+        df_path = "datasets/df_treatments_outcomes.csv"
+        treatments = ["Vegetables", "Sleep"]
+        outcomes = ["Depression", "Distress"]
 
-            # Gather data
-            df = gather_data(df_path, treatment, outcome)
+        for outcome in outcomes: 
+            for treatment in treatments:
+                print("Treatment: %s\nOutcome: %s" % (treatment, outcome))
 
-            # Calculate causal estimate with backdoor estimator
-            results = backdoor(df)
-            print("Effect of 0 Percent Treatment on Outcome: %s" % results[0])
-            print("Effect of 100 Percent Treatment on Outcome: %s\n" % results[1])
+                # Gather data
+                df = gather_data(df_path, treatment, outcome)
+
+                # Calculate causal estimate with backdoor estimator
+                results = backdoor(df)
+                print("Effect of 0 Percent Treatment on Outcome: %s" % results[0])
+                print("Effect of 100 Percent Treatment on Outcome: %s\n" % results[1])
+    
+    elif synthetic:
+        df_path = "datasets/df_synthetic.csv"
+        treatments = ["Vegetables"]
+        outcomes = ["Depression"]
+        df = pd.read_csv(df_path)
+        results = backdoor(df)
+        print("Effect of 0 Percent Treatment on Outcome: %s" % results[0])
+        print("Effect of 100 Percent Treatment on Outcome: %s\n" % results[1])
+
+        
 
 
 
