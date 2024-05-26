@@ -4,6 +4,9 @@ import statsmodels.formula.api as smf
 from statistics import mean
 import pandas as pd
 
+# Script to generate causal estimate for Alzheimer's Disease and Healthy Aging dataset using backdoor estimator.
+# We take into account confounders for this estimate
+
 def backdoor(df, confounders=["Location", "Age", "Gender/Race"]):
     """
     confounders:
@@ -56,7 +59,10 @@ def gather_data(df_path, treatment, outcome):
 if __name__ == "__main__":
     print("\nRunning 'causal_estimates.py'...\n")
 
-    synthetic = True
+    # Functionality to calculate causal estimate for synthetic dataset as a sanity check
+    synthetic = False
+
+    # If not using synthetic dataset
     if not synthetic:
 
         # Calculate causal effects of treatments on outcomes
@@ -76,11 +82,16 @@ if __name__ == "__main__":
                 print("Effect of 0 Percent Treatment on Outcome: %s" % results[0])
                 print("Effect of 100 Percent Treatment on Outcome: %s\n" % results[1])
     
+    # If using synthetic dataset 
     elif synthetic:
+        
+        # Reads in dataframe for synthetic dataset
         df_path = "datasets/df_synthetic.csv"
         treatments = ["Vegetables"]
         outcomes = ["Depression"]
         df = pd.read_csv(df_path)
+
+        # Calculate causal estimate with backdoor estimator
         results = backdoor(df)
         print("Effect of 0 Percent Treatment on Outcome: %s" % results[0])
         print("Effect of 100 Percent Treatment on Outcome: %s\n" % results[1])

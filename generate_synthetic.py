@@ -5,6 +5,8 @@ import scipy.stats as stats
 import random
 import pandas as pd
 
+# Script to generate synthetic dataset to check if causal estimate framework is accurate for known causal effect
+
 
 def generate_sample():
     """
@@ -20,6 +22,7 @@ def generate_sample():
     # Sample values based on background distributions of variables
     curr_sample = []
     treatment_val = None
+    # Calculate value for each variable of interest
     for var in variables:
         if var in ["Location"]:
             curr_sample.append(location)
@@ -66,7 +69,7 @@ if __name__ == "__main__":
     print("\nRunning 'generate_synthetic.py'...\n")
 
     # Generate single sample
-    num_samples = 5000 # To match number of samples in actual dataset
+    num_samples = 5000
     dataset = generate_dataset(num_samples=num_samples)
 
     # Write to output file

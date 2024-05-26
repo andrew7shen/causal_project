@@ -7,6 +7,9 @@ from sklearn.linear_model import LogisticRegression
 from statistics import mean
 import pandas as pd
 
+# Script to generate causal estimate for Alzheimer's Disease and Healthy Aging dataset using backdoor estimator.
+# We start with generating an estimate without taking into account confounders.
+
 
 def backdoor(df, confounders=["c", "d", "e", "f"]):
     """
@@ -58,7 +61,7 @@ def gather_data(df_path, treatment, outcome):
 
 
 if __name__ == "__main__":
-    print("\nRunning 'causal_estimates.py'...\n")
+    print("\nRunning 'backdoor.py'...\n")
 
     # Calculate causal effects of treatments on outcomes
     df_path = "datasets/df_treatments_outcomes.csv"
