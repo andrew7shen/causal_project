@@ -33,6 +33,12 @@ def apply_double_ml(df, treatment_value, outcome_value, confounders):
     # Fit the model
     ml_model.fit()
     print("Model fitted")
+
+    print("\nParameters of the Treatment Model (learner_l):")
+    print(learner_l.get_params())
+
+    print("\nParameters of the Treatment Model (learner_m):")
+    print(learner_m.get_params())
     # Print the estimated causal effects
     summary_df = ml_model.summary
     print("Estimated causal effect of", treatment_value, "on", outcome_value, ":", summary_df['coef'].values[0])
@@ -43,13 +49,14 @@ if __name__ == "__main__":
     df = pd.read_csv(df_path)
     # print(df.head())
     # Defining the confounding variables
-    confounders = ["Location", "Age", "Gender/Race"]
+    confounders = ["Location", "Age"]
     print("Printing the treatment variables")
     print(df["Treatment"].unique())
     print("Printing the outcome variables ")
     print(df["Outcome"].unique())
     # Checking the effect of vegetables on depression
     # apply_double_ml(df, 'Vegetables', 'Depression', confounders)
+    print("Causal effects with only Age and Gender/Race")
     apply_double_ml(df, 'Vegetables', 'Distress', confounders)
     apply_double_ml(df, 'Vegetables', 'Depression', confounders)
     apply_double_ml(df, 'Sleep', 'Depression', confounders)
