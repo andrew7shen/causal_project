@@ -60,7 +60,7 @@ if __name__ == "__main__":
     print("\nRunning 'causal_estimates.py'...\n")
 
     # Functionality to calculate causal estimate for synthetic dataset as a sanity check
-    synthetic = False
+    synthetic = True
 
     # If not using synthetic dataset
     if not synthetic:
@@ -84,17 +84,22 @@ if __name__ == "__main__":
     
     # If using synthetic dataset 
     elif synthetic:
-        
-        # Reads in dataframe for synthetic dataset
-        df_path = "datasets/df_synthetic.csv"
-        treatments = ["Vegetables"]
-        outcomes = ["Depression"]
-        df = pd.read_csv(df_path)
 
-        # Calculate causal estimate with backdoor estimator
-        results = backdoor(df)
-        print("Effect of 0 Percent Treatment on Outcome: %s" % results[0])
-        print("Effect of 100 Percent Treatment on Outcome: %s\n" % results[1])
+        # Generate causal estimates for each dataset size
+        dataset_sizes = [1000, 10000, 100000]
+        for num_samples in dataset_sizes:
+        
+            # Reads in dataframe for synthetic dataset
+            df_path = "datasets/df_synthetic_%s.csv" % num_samples
+            treatments = ["Vegetables"]
+            outcomes = ["Depression"]
+            df = pd.read_csv(df_path)
+
+            # Calculate causal estimate with backdoor estimator
+            results = backdoor(df)
+            print("Synthetc Dataset with %s Samples" % num_samples)
+            print("Effect of 0 Percent Treatment on Outcome: %s" % results[0])
+            print("Effect of 100 Percent Treatment on Outcome: %s\n" % results[1])
 
         
 
